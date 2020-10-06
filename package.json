@@ -13,5 +13,8 @@
   "bugs": {
     "url": "https://github.com/robertojnior/node-with-tompero/issues"
   },
-  "homepage": "https://github.com/robertojnior/node-with-tompero#readme"
+  "homepage": "https://github.com/robertojnior/node-with-tompero#readme",
+  "devDependencies": {
+    "typescript": "^4.0.3"
+  }
 }
