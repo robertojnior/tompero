@@ -1,0 +1,17 @@
+{
+  "name": "node-with-tompero",
+  "version": "1.0.0",
+  "description": "A simple API to get receipts from ingredients.",
+  "private": true,
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/robertojnior/node-with-tompero.git"
+  },
+  "author": "Roberto Júnior <robertojunior085@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/robertojnior/node-with-tompero/issues"
+  },
+  "homepage": "https://github.com/robertojnior/node-with-tompero#readme"
+}
