@@ -1,8 +1,8 @@
-import { HTTP_CLIENT_ERROR_CODE } from '@constants/General'
 import RecipePuppyContract from '@contracts/RecipePuppy'
 import Recipe from '@interfaces/RecipePuppy/IRecipe'
 import SearchEngine from '@interfaces/RecipePuppy/ISearchEngine'
 import SearchResults from '@interfaces/RecipePuppy/ISearchResults'
+import { HTTP_CLIENT_ERROR_CODE } from '@utils/constants'
 import { genericError, genericHttpError } from '@utils/errors'
 import ArgumentError from '@utils/errors/ArgumentError'
 

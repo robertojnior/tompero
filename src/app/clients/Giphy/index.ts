@@ -1,16 +1,16 @@
-import { HTTP_CLIENT_ERROR_CODE } from '@constants/General'
+import GiphyClientContract from '@contracts/GiphyClient'
+import IGiphy from '@interfaces/Giphy'
+import GiphySearchEngine from '@interfaces/GiphyClient/ISearchEngine'
+import GiphySearchResults from '@interfaces/GiphyClient/ISearchResults'
+import { HTTP_CLIENT_ERROR_CODE } from '@utils/constants'
 import {
   DEFAULT_SEARCH_GIPHY_RESULT_LIMIT,
   DEFAULT_SEARCH_GIPHY_OFFSET,
   DEFAULT_SEARCH_GIPHY_RATING,
   DEFAULT_SEARCH_GIPHY_LANG
-} from '@constants/GiphyClient'
-import GiphyClientContract from '@contracts/GiphyClient'
-import IGiphy from '@interfaces/Giphy'
-import GiphySearchEngine from '@interfaces/GiphyClient/ISearchEngine'
-import GiphySearchResults from '@interfaces/GiphyClient/ISearchResults'
+} from '@utils/constants/GiphyClient'
+import { genericError, genericHttpError } from '@utils/errors'
 import ArgumentError from '@utils/errors/ArgumentError'
-import HttpError from '@utils/errors/HttpError'
 
 import baseClient from './baseClient'
 
@@ -46,9 +46,9 @@ class Giphy implements GiphySearchEngine {
       return giphyImage.images.fixed_height
     } catch (error) {
       if (error?.response?.status >= HTTP_CLIENT_ERROR_CODE) {
-        throw new HttpError('The server is not available and cannot respond to your request. Please try again later.')
+        throw genericHttpError
       } else {
-        throw new Error('An unexpected error occurred while trying to fetch the results. Contact support.')
+        throw genericError
       }
     }
   }

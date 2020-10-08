@@ -14,9 +14,11 @@
     "paths": {
       "@clients/*": ["app/clients/*"],
       "@contracts/*": ["app/contracts/*"],
-      "@interfaces/*": ["app/interfaces/*", "domain/interfaces/*"],
+      "@interfaces/*": [
+        "app/interfaces/*",
+        "domain/interfaces/*"
+      ],
       "@services/*": ["app/services/*"],
-      "@constants/*": ["constants/*"],
       "@mocks/*": ["specs/mocks/*"],
       "@infra/*": ["infra/*"],
       "@utils/*": ["utils/*"]

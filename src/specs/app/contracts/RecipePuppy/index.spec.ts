@@ -1,5 +1,5 @@
-import { MAX_INGREDIENTS_QUANTITY } from '@constants/RecipePuppy'
 import RecipePuppyContract from '@contracts/RecipePuppy'
+import { MAX_INGREDIENTS_QUANTITY } from '@utils/constants/RecipePuppy'
 
 describe('.validate', () => {
   describe(`when ingredients quantity is greater than ${MAX_INGREDIENTS_QUANTITY}`, () => {

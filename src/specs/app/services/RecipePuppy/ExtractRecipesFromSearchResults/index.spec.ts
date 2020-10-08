@@ -1,6 +1,6 @@
-import { FALLBACK_GIF_URL } from '@constants/GiphyClient'
 import recipePuppySearch from '@mocks/RecipePuppy/SearchResults'
 import ExtractRecipesFromSearchResults from '@services/RecipePuppy/ExtractRecipesFromSearchResults'
+import { FALLBACK_GIF_URL } from '@utils/constants/GiphyClient'
 
 const extractRecipesFromSearchResults = new ExtractRecipesFromSearchResults([])
 

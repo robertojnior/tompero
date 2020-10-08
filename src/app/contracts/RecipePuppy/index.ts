@@ -1,4 +1,4 @@
-import { MAX_INGREDIENTS_QUANTITY } from '@constants/RecipePuppy'
+import { MAX_INGREDIENTS_QUANTITY } from '@utils/constants/RecipePuppy'
 
 import Contract from './IContract'
 
