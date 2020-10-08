@@ -12,7 +12,12 @@
     "strict": true,
     "baseUrl": "src",
     "paths": {
-      "@infra/*": ["infra/*"]
+      "@clients/*": ["app/clients/*"],
+      "@constants/*": ["app/constants/*"],
+      "@contracts/*": ["app/contracts/*"],
+      "@interfaces/*": ["app/interfaces/*"],
+      "@infra/*": ["infra/*"],
+      "@utils/*": ["utils/*"]
     },
     "esModuleInterop": true,
     "resolveJsonModule": true,
