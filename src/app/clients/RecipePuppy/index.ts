@@ -1,10 +1,10 @@
-import { HTTP_CLIENT_ERROR } from '@constants/General'
+import { HTTP_CLIENT_ERROR_CODE } from '@constants/General'
 import RecipePuppyContract from '@contracts/RecipePuppy'
 import Recipe from '@interfaces/RecipePuppy/IRecipe'
 import SearchEngine from '@interfaces/RecipePuppy/ISearchEngine'
 import SearchResults from '@interfaces/RecipePuppy/ISearchResults'
+import { genericError, genericHttpError } from '@utils/errors'
 import ArgumentError from '@utils/errors/ArgumentError'
-import HttpError from '@utils/errors/HttpError'
 
 import baseClient from './baseClient'
 
@@ -29,10 +29,10 @@ class RecipePuppy implements SearchEngine {
 
       return response.data.results
     } catch (error) {
-      if (error?.response?.status >= HTTP_CLIENT_ERROR) {
-        throw new HttpError('The server is not available and cannot respond to your request. Please try again later.')
+      if (error?.response?.status >= HTTP_CLIENT_ERROR_CODE) {
+        throw genericHttpError
       } else {
-        throw new Error('An unidentified error occurred while trying to fetch recipes. Contact support.')
+        throw genericError
       }
     }
   }

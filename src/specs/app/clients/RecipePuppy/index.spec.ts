@@ -2,8 +2,8 @@ import RecipePuppy from '@clients/RecipePuppy'
 import baseClient from '@clients/RecipePuppy/baseClient'
 import invalidHttpStatuses from '@mocks/InvalidHttpStatuses'
 import recipePuppySearch from '@mocks/RecipePuppy/SearchResults'
+import { genericError, genericHttpError } from '@utils/errors'
 import ArgumentError from '@utils/errors/ArgumentError'
-import HttpError from '@utils/errors/HttpError'
 
 jest.mock('@clients/RecipePuppy/baseClient')
 
@@ -55,16 +55,13 @@ describe('.fetchRecipes', () => {
   })
 
   describe('when recipes service is unavailable', () => {
-    const genericError = new Error('An unidentified error occurred while trying to fetch recipes. Contact support.')
-    const httpError = new HttpError('The server is not available and cannot respond to your request. Please try again later.')
-
     describe.each(invalidHttpStatuses)('and responds with %i %s', status => {
       it('should throws http error', () => {
         const rejectedValue = { response: { status: status } }
 
         mockedBaseClient.get.mockRejectedValue(rejectedValue)
 
-        return expect(recipePuppy.searchRecipes()).rejects.toStrictEqual(httpError)
+        return expect(recipePuppy.searchRecipes()).rejects.toStrictEqual(genericHttpError)
       })
     })
 

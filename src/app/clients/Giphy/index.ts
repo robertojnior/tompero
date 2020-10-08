@@ -1,4 +1,4 @@
-import { HTTP_CLIENT_ERROR } from '@constants/General'
+import { HTTP_CLIENT_ERROR_CODE } from '@constants/General'
 import {
   DEFAULT_SEARCH_GIPHY_RESULT_LIMIT,
   DEFAULT_SEARCH_GIPHY_OFFSET,
@@ -45,7 +45,7 @@ class Giphy implements GiphySearchEngine {
 
       return giphyImage.images.fixed_height
     } catch (error) {
-      if (error?.response?.status >= HTTP_CLIENT_ERROR) {
+      if (error?.response?.status >= HTTP_CLIENT_ERROR_CODE) {
         throw new HttpError('The server is not available and cannot respond to your request. Please try again later.')
       } else {
         throw new Error('An unexpected error occurred while trying to fetch the results. Contact support.')
