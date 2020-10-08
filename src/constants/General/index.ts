@@ -1,0 +1,5 @@
+const HTTP_CLIENT_ERROR = 400
+
+export {
+  HTTP_CLIENT_ERROR
+}

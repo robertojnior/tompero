@@ -1,10 +1,10 @@
-const mockedResponse = {
+const recipePuppySearch = {
   data: {
     results: [
       {
         title: 'BLT Pasta Salad',
         href: 'http://allrecipes.com/Recipe/BLT-Pasta-Salad/Detail.aspx',
-        ingredients: 'bacon, ranch dressing, onions, tomato'
+        ingredients: 'bacon, ranch, dressing, onions, tomato'
       },
       {
         title: 'Tomato Alfredo Sauce with Artichokes',
@@ -15,4 +15,4 @@ const mockedResponse = {
   }
 }
 
-export default mockedResponse
+export default recipePuppySearch

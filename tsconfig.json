@@ -13,9 +13,11 @@
     "baseUrl": "src",
     "paths": {
       "@clients/*": ["app/clients/*"],
-      "@constants/*": ["app/constants/*"],
       "@contracts/*": ["app/contracts/*"],
-      "@interfaces/*": ["app/interfaces/*"],
+      "@interfaces/*": ["app/interfaces/*", "domain/interfaces/*"],
+      "@services/*": ["app/services/*"],
+      "@constants/*": ["constants/*"],
+      "@mocks/*": ["specs/mocks/*"],
       "@infra/*": ["infra/*"],
       "@utils/*": ["utils/*"]
     },
