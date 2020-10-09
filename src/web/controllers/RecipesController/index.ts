@@ -26,9 +26,9 @@ class RecipesController {
       const sanitizedIngredients = sanitizeIngredients(ingredients as string)
 
       const recipePuppyClient = new RecipePuppyClient(sanitizedIngredients)
-      const recipesRearchResults = await recipePuppyClient.searchRecipes()
+      const recipesSearchResults = await recipePuppyClient.searchRecipes()
 
-      const extractRecipePuppiesFromSearchResult = new ExtractRecipePuppiesFromSearchResult(recipesRearchResults)
+      const extractRecipePuppiesFromSearchResult = new ExtractRecipePuppiesFromSearchResult(recipesSearchResults)
 
       extractRecipePuppiesFromSearchResult.begin()
 

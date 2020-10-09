@@ -1,5 +1,3 @@
-import dotenv from 'dotenv'
-
 import GiphySearchEngine from '@interfaces/GiphyClient/ISearchEngine'
 import GiphySearchResults from '@interfaces/GiphyClient/ISearchResults'
 
@@ -10,8 +8,6 @@ import { genericError, genericHttpError } from '@utils/errors'
 import ArgumentError from '@utils/errors/ArgumentError'
 
 import baseClient from './baseClient'
-
-dotenv.config()
 
 class Giphy implements GiphySearchEngine {
   private searchTerm: string
@@ -27,7 +23,7 @@ class Giphy implements GiphySearchEngine {
   }
 
   async searchGif(): Promise<string> {
-    const requestParams = { params: { q: this.searchTerm } }
+    const requestParams = { params: { q: this.searchTerm, limit: 1, offset: 0, rating: 'g', lang: 'en' } }
 
     try {
       const response = await baseClient.get<GiphySearchResults>('', requestParams)
