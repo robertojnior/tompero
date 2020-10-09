@@ -47,7 +47,7 @@ describe('.searchGif', () => {
     it('should return gif', () => {
       const giphyImage = giphySearch.data.data[0]
 
-      const searchedGiphy = giphyImage.images.fixed_height
+      const searchedGiphy = giphyImage.images.fixed_height.url
 
       return expect(giphy.searchGif()).resolves.toEqual(searchedGiphy)
     })

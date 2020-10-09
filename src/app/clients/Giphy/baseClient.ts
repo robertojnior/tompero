@@ -1,9 +1,12 @@
 import axios from 'axios'
+import dotenv from 'dotenv'
+
+dotenv.config()
 
 const baseClient = axios.create({
-  baseURL: 'https://api.giphy.com/v1/gifs/search',
+  baseURL: process.env.GIPHY_BASE_URL,
   params: {
-    api_key: '5r7a049VRAfIfeBMds8A2ydnoZinkAtr'
+    api_key: process.env.GIPHY_API_KEY
   }
 })
 

@@ -1,5 +1,7 @@
-import { FALLBACK_GIF_URL } from '@utils/constants/GiphyClient'
+import dotenv from 'dotenv'
 
-const giphySearch = { data: { data: [{ images: { fixed_height: { url: FALLBACK_GIF_URL } } }] } }
+dotenv.config()
+
+const giphySearch = { data: { data: [{ images: { fixed_height: { url: process.env.GIHPY_GIF_FALLBACK_URL } } }] } }
 
 export default giphySearch
