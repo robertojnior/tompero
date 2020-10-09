@@ -19,9 +19,10 @@
         "domain/interfaces/*"
       ],
       "@services/*": ["app/services/*"],
-      "@mocks/*": ["specs/mocks/*"],
+      "@mocks/*": ["specs/__mocks__/*"],
       "@infra/*": ["infra/*"],
-      "@utils/*": ["utils/*"]
+      "@utils/*": ["utils/*"],
+      "@web/*": ["web/*"]
     },
     "esModuleInterop": true,
     "resolveJsonModule": true,

@@ -1,8 +1,7 @@
 import RecipePuppyContract from '@contracts/RecipePuppy'
-import Recipe from '@interfaces/RecipePuppy/IRecipe'
 import SearchEngine from '@interfaces/RecipePuppy/ISearchEngine'
-import SearchResults from '@interfaces/RecipePuppy/ISearchResults'
-import { HTTP_CLIENT_ERROR_CODE } from '@utils/constants'
+import SearchResults, { IResult } from '@interfaces/RecipePuppy/ISearchResults'
+import { BAD_REQUEST } from '@utils/constants/HttpStatus'
 import { genericError, genericHttpError } from '@utils/errors'
 import ArgumentError from '@utils/errors/ArgumentError'
 
@@ -21,7 +20,7 @@ class RecipePuppy implements SearchEngine {
     this.ingredients = ingredients
   }
 
-  async searchRecipes(): Promise<Recipe[]> {
+  async searchRecipes(): Promise<IResult[]> {
     try {
       const requestParams = { params: { i: this.ingredients.join(',') } }
 
@@ -29,7 +28,7 @@ class RecipePuppy implements SearchEngine {
 
       return response.data.results
     } catch (error) {
-      if (error?.response?.status >= HTTP_CLIENT_ERROR_CODE) {
+      if (error?.response?.status >= BAD_REQUEST) {
         throw genericHttpError
       } else {
         throw genericError

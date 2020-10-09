@@ -1,5 +1,0 @@
-const HTTP_CLIENT_ERROR_CODE = 400
-
-export {
-  HTTP_CLIENT_ERROR_CODE
-}

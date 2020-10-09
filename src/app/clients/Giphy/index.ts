@@ -2,13 +2,13 @@ import GiphyClientContract from '@contracts/GiphyClient'
 import IGiphy from '@interfaces/Giphy'
 import GiphySearchEngine from '@interfaces/GiphyClient/ISearchEngine'
 import GiphySearchResults from '@interfaces/GiphyClient/ISearchResults'
-import { HTTP_CLIENT_ERROR_CODE } from '@utils/constants'
 import {
   DEFAULT_SEARCH_GIPHY_RESULT_LIMIT,
   DEFAULT_SEARCH_GIPHY_OFFSET,
   DEFAULT_SEARCH_GIPHY_RATING,
   DEFAULT_SEARCH_GIPHY_LANG
 } from '@utils/constants/GiphyClient'
+import { BAD_REQUEST } from '@utils/constants/HttpStatus'
 import { genericError, genericHttpError } from '@utils/errors'
 import ArgumentError from '@utils/errors/ArgumentError'
 
@@ -45,7 +45,7 @@ class Giphy implements GiphySearchEngine {
 
       return giphyImage.images.fixed_height
     } catch (error) {
-      if (error?.response?.status >= HTTP_CLIENT_ERROR_CODE) {
+      if (error?.response?.status >= BAD_REQUEST) {
         throw genericHttpError
       } else {
         throw genericError
