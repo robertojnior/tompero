@@ -43,7 +43,12 @@
         "newlinesBetween": "always",
         "groups": [
           "module",
-          "/^@/",
+          "/^@interfaces/",
+          "/^@contracts/",
+          "/^@clients/",
+          "/^@services/",
+          "/^@web/",
+          "/^@utils/",
           ["parent", "sibling", "index"]
         ],
         "alphabetize": {

@@ -1,4 +1,5 @@
-import RecipePuppyContract from '@contracts/RecipePuppyClient'
+import RecipePuppyClientContract from '@contracts/RecipePuppyClient'
+
 import { MAX_INGREDIENTS_QUANTITY } from '@utils/constants/RecipePuppy'
 
 describe('.validate', () => {
@@ -6,9 +7,9 @@ describe('.validate', () => {
     it('should return false', () => {
       const ingredients = ['onion', 'tomato', 'pineapple', 'garlic']
 
-      const recipePuppyContract = new RecipePuppyContract()
+      const recipePuppyClientContract = new RecipePuppyClientContract()
 
-      expect(recipePuppyContract.validate(ingredients)).toBeFalsy()
+      expect(recipePuppyClientContract.validate(ingredients)).toBeFalsy()
     })
   })
 
@@ -16,9 +17,9 @@ describe('.validate', () => {
     it('should return false', () => {
       const ingredients = ['onion, tomato', 'pineapple, garlic']
 
-      const recipePuppyContract = new RecipePuppyContract()
+      const recipePuppyClientContract = new RecipePuppyClientContract()
 
-      expect(recipePuppyContract.validate(ingredients)).toBeFalsy()
+      expect(recipePuppyClientContract.validate(ingredients)).toBeFalsy()
     })
   })
 
@@ -26,9 +27,9 @@ describe('.validate', () => {
     it('should return true', () => {
       const ingredients = ['onion', 'tomato', 'garlic']
 
-      const recipePuppyContract = new RecipePuppyContract()
+      const recipePuppyClientContract = new RecipePuppyClientContract()
 
-      expect(recipePuppyContract.validate(ingredients)).toBeTruthy()
+      expect(recipePuppyClientContract.validate(ingredients)).toBeTruthy()
     })
   })
 })

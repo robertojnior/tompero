@@ -1,7 +1,9 @@
-import RecipePuppyContract from '@contracts/RecipePuppyClient'
 import RecipePuppySearchEngine from '@interfaces/RecipePuppyClient/ISearchEngine'
 import RecipePuppySearchResults, { IResult as RecipePuppySearchResult } from '@interfaces/RecipePuppyClient/ISearchResults'
-import { BAD_REQUEST } from '@utils/constants/HttpStatus'
+
+import RecipePuppyClientContract from '@contracts/RecipePuppyClient'
+
+import { BAD_REQUEST } from '@utils/constants/HttpStatuses'
 import { genericError, genericHttpError } from '@utils/errors'
 import ArgumentError from '@utils/errors/ArgumentError'
 
@@ -11,9 +13,9 @@ class RecipePuppy implements RecipePuppySearchEngine {
   private ingredients: string[]
 
   constructor(ingredients: string[]) {
-    const recipePuppyContract = new RecipePuppyContract()
+    const recipePuppyClientContract = new RecipePuppyClientContract()
 
-    if (!recipePuppyContract.validate(ingredients)) {
+    if (!recipePuppyClientContract.validate(ingredients)) {
       throw new ArgumentError('Must have less than four ingredients.')
     }
 

@@ -1,16 +1,17 @@
-import request from 'supertest'
-
-import giphyBaseClient from '@clients/GiphyClient/baseClient'
-import recipePuppyBaseClient from '@clients/RecipePuppyClient/baseClient'
 import app from '@infra/server/app'
 import invalidHttpStatuses from '@mocks/InvalidHttpStatuses'
 import { recipes } from '@mocks/RecipePuppyClient/Recipes'
 import recipePuppySearch from '@mocks/RecipePuppyClient/SearchResults'
+import request from 'supertest'
+
+import giphyBaseClient from '@clients/GiphyClient/baseClient'
+import recipePuppyBaseClient from '@clients/RecipePuppyClient/baseClient'
+
 import {
   OK,
   BAD_REQUEST,
   SERVICE_UNAVAILABLE, INTERNAL_SERVER_ERROR
-} from '@utils/constants/HttpStatus'
+} from '@utils/constants/HttpStatuses'
 
 jest.mock('@clients/RecipePuppyClient/baseClient')
 jest.mock('@clients/GiphyClient/baseClient')

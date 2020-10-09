@@ -1,10 +1,11 @@
 import dotenv from 'dotenv'
 
-import GiphyClient from '@clients/GiphyClient'
 import IExtractedRecipe from '@interfaces/ExtractRecipePuppiesFromSearchResults/IExtractedRecipe'
 import IExtractProcess from '@interfaces/ExtractRecipePuppiesFromSearchResults/IExtractProcess'
 import IRecipe from '@interfaces/Recipe'
 import { IResult as RecipePuppySearchResult } from '@interfaces/RecipePuppyClient/ISearchResults'
+
+import GiphyClient from '@clients/GiphyClient'
 
 dotenv.config()
 

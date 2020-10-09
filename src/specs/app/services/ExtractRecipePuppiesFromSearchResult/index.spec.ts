@@ -1,10 +1,14 @@
-import giphyBaseClient from '@clients/GiphyClient/baseClient'
+
 import giphySearch from '@mocks/GiphyClient/SearchResults'
 import invalidHttpStatuses from '@mocks/InvalidHttpStatuses'
 import extractedRecipes from '@mocks/RecipePuppyClient/ExtractedRecipes'
 import { recipes as mockedRecipes, recipesWithFallbackGifUrlAndErrorMessage } from '@mocks/RecipePuppyClient/Recipes'
 import recipePuppySearch from '@mocks/RecipePuppyClient/SearchResults'
+
+import giphyBaseClient from '@clients/GiphyClient/baseClient'
+
 import ExtractRecipePuppiesFromSearchResult from '@services/ExtractRecipePuppiesFromSearchResult'
+
 import { genericHttpError, genericError } from '@utils/errors'
 import ArgumentError from '@utils/errors/ArgumentError'
 

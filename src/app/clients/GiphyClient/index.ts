@@ -1,9 +1,11 @@
 import dotenv from 'dotenv'
 
-import GiphyClientContract from '@contracts/GiphyClient'
 import GiphySearchEngine from '@interfaces/GiphyClient/ISearchEngine'
 import GiphySearchResults from '@interfaces/GiphyClient/ISearchResults'
-import { BAD_REQUEST } from '@utils/constants/HttpStatus'
+
+import GiphyClientContract from '@contracts/GiphyClient'
+
+import { BAD_REQUEST } from '@utils/constants/HttpStatuses'
 import { genericError, genericHttpError } from '@utils/errors'
 import ArgumentError from '@utils/errors/ArgumentError'
 
@@ -15,9 +17,9 @@ class Giphy implements GiphySearchEngine {
   private searchTerm: string
 
   constructor(searchTerm: string) {
-    const giphyContract = new GiphyClientContract()
+    const giphyClientContract = new GiphyClientContract()
 
-    if (!giphyContract.validate(searchTerm)) {
+    if (!giphyClientContract.validate(searchTerm)) {
       throw new ArgumentError('Search term can\'t be blank.')
     }
 
