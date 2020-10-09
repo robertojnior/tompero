@@ -1,19 +1,19 @@
 import request from 'supertest'
 
-import giphyBaseClient from '@clients/Giphy/baseClient'
-import recipePuppyBaseClient from '@clients/RecipePuppy/baseClient'
+import giphyBaseClient from '@clients/GiphyClient/baseClient'
+import recipePuppyBaseClient from '@clients/RecipePuppyClient/baseClient'
 import app from '@infra/server/app'
 import invalidHttpStatuses from '@mocks/InvalidHttpStatuses'
-import { successRecipes } from '@mocks/RecipePuppy/Recipes'
-import recipePuppySearch from '@mocks/RecipePuppy/SearchResults'
+import { recipes } from '@mocks/RecipePuppyClient/Recipes'
+import recipePuppySearch from '@mocks/RecipePuppyClient/SearchResults'
 import {
   OK,
   BAD_REQUEST,
   SERVICE_UNAVAILABLE, INTERNAL_SERVER_ERROR
 } from '@utils/constants/HttpStatus'
 
-jest.mock('@clients/RecipePuppy/baseClient')
-jest.mock('@clients/Giphy/baseClient')
+jest.mock('@clients/RecipePuppyClient/baseClient')
+jest.mock('@clients/GiphyClient/baseClient')
 
 const mockedRecipePuppyBaseClient = recipePuppyBaseClient as jest.Mocked<typeof recipePuppyBaseClient>
 const mockedGiphybaseClientBaseClient = giphyBaseClient as jest.Mocked<typeof recipePuppyBaseClient>
@@ -50,7 +50,7 @@ describe('.index', () => {
             .then(response => {
               expect(response.body).toEqual({
                 keywords: ['onion', 'tomato', 'burguer'],
-                recipes: successRecipes
+                recipes: recipes
               })
             })
         })

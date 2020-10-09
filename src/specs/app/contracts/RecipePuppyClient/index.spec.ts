@@ -1,4 +1,4 @@
-import RecipePuppyContract from '@contracts/RecipePuppy'
+import RecipePuppyContract from '@contracts/RecipePuppyClient'
 import { MAX_INGREDIENTS_QUANTITY } from '@utils/constants/RecipePuppy'
 
 describe('.validate', () => {

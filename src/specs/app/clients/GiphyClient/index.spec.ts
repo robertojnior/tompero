@@ -1,19 +1,19 @@
-import Giphy from '@clients/Giphy'
-import baseClient from '@clients/Giphy/baseClient'
-import giphySearch from '@mocks/Giphy/SearchResults'
-import { defaultSearchTerm, emptySearchTerm } from '@mocks/Giphy/SearchTerms'
+import GiphyClient from '@clients/GiphyClient'
+import giphyBaseClient from '@clients/GiphyClient/baseClient'
+import giphySearch from '@mocks/GiphyClient/SearchResults'
+import { defaultSearchTerm, emptySearchTerm } from '@mocks/GiphyClient/SearchTerms'
 import invalidHttpStatuses from '@mocks/InvalidHttpStatuses'
 import { genericError, genericHttpError } from '@utils/errors'
 import ArgumentError from '@utils/errors/ArgumentError'
 
-jest.mock('@clients/Giphy/baseClient')
+jest.mock('@clients/GiphyClient/baseClient')
 
-const mockedBaseClient = baseClient as jest.Mocked<typeof baseClient>
+const mockedGiphyBaseClient = giphyBaseClient as jest.Mocked<typeof giphyBaseClient>
 
 describe('#constructor', () => {
   describe('when search term is not empty', () => {
     it('should instantiate Giphy', () => {
-      expect(new Giphy(defaultSearchTerm)).toBeInstanceOf(Giphy)
+      expect(new GiphyClient(defaultSearchTerm)).toBeInstanceOf(GiphyClient)
     })
   })
 
@@ -21,10 +21,10 @@ describe('#constructor', () => {
     it('should throws argument error', () => {
       const argumentError = new ArgumentError('Search term can\'t be blank.')
 
-      expect(() => new Giphy(emptySearchTerm)).toThrow(argumentError)
+      expect(() => new GiphyClient(emptySearchTerm)).toThrow(argumentError)
 
       try {
-        (() => new Giphy(emptySearchTerm))()
+        (() => new GiphyClient(emptySearchTerm))()
       } catch (error) {
         expect(error).toBeInstanceOf(ArgumentError)
       }
@@ -33,16 +33,16 @@ describe('#constructor', () => {
 })
 
 describe('.searchGif', () => {
-  const giphy = new Giphy(defaultSearchTerm)
+  const giphy = new GiphyClient(defaultSearchTerm)
 
   it('should calls baseClient get method 1 time', () => {
     giphy.searchGif()
 
-    expect(mockedBaseClient.get).toHaveBeenCalledTimes(1)
+    expect(mockedGiphyBaseClient.get).toHaveBeenCalledTimes(1)
   })
 
   describe('when gif service is available', () => {
-    mockedBaseClient.get.mockResolvedValue(giphySearch)
+    mockedGiphyBaseClient.get.mockResolvedValue(giphySearch)
 
     it('should return gif', () => {
       const giphyImage = giphySearch.data.data[0]
@@ -58,7 +58,7 @@ describe('.searchGif', () => {
       it('should throws http error', () => {
         const rejectedValue = { response: { status: status } }
 
-        mockedBaseClient.get.mockRejectedValue(rejectedValue)
+        mockedGiphyBaseClient.get.mockRejectedValue(rejectedValue)
 
         return expect(giphy.searchGif()).rejects.toStrictEqual(genericHttpError)
       })
@@ -66,7 +66,7 @@ describe('.searchGif', () => {
 
     describe('and responds with unexpected error', () => {
       it('should throws generic error', () => {
-        mockedBaseClient.get.mockRejectedValue({ error: 'Unexpected error' })
+        mockedGiphyBaseClient.get.mockRejectedValue({ error: 'Unexpected error' })
 
         return expect(giphy.searchGif()).rejects.toStrictEqual(genericError)
       })

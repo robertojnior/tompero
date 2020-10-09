@@ -1,11 +1,9 @@
-import IGiphy from '@interfaces/Giphy'
-
-const pastaSaladGiphyPromise = new Promise<IGiphy>(resolve => {
-  resolve({ url: 'https://media.giphy.com/media/xBRhcST67lI2c/giphy.gif' })
+const pastaSaladGiphyPromise = new Promise<string>(resolve => {
+  resolve('https://media.giphy.com/media/xBRhcST67lI2c/giphy.gif')
 })
 
-const tomatoAlfredoGiphyPromise = new Promise<IGiphy>(resolve => {
-  resolve({ url: 'https://media.giphy.com/media/I3eVhMpz8hns4/giphy.gif' })
+const tomatoAlfredoGiphyPromise = new Promise<string>(resolve => {
+  resolve('https://media.giphy.com/media/I3eVhMpz8hns4/giphy.gif')
 })
 
 const extractedRecipes = [

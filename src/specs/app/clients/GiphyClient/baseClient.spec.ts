@@ -1,4 +1,4 @@
-import baseClient from '@clients/Giphy/baseClient'
+import baseClient from '@clients/GiphyClient/baseClient'
 
 describe('.defaults.baseUrl', () => {
   it('should equals to process.env.GIPHY_BASE_URL', () => {

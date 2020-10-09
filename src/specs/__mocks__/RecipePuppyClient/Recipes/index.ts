@@ -2,7 +2,7 @@ import dotenv from 'dotenv'
 
 dotenv.config()
 
-const successRecipes = [
+const recipes = [
   {
     title: 'BLT Pasta Salad',
     link: 'http://allrecipes.com/Recipe/BLT-Pasta-Salad/Detail.aspx',
@@ -17,7 +17,7 @@ const successRecipes = [
   }
 ]
 
-const successRecipesWithFallbackGifUrlAndErrorMessage = [
+const recipesWithFallbackGifUrlAndErrorMessage = [
   {
     title: 'BLT Pasta Salad',
     link: 'http://allrecipes.com/Recipe/BLT-Pasta-Salad/Detail.aspx',
@@ -35,6 +35,6 @@ const successRecipesWithFallbackGifUrlAndErrorMessage = [
 ]
 
 export {
-  successRecipes,
-  successRecipesWithFallbackGifUrlAndErrorMessage
+  recipes,
+  recipesWithFallbackGifUrlAndErrorMessage
 }

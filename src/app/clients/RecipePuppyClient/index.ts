@@ -1,13 +1,13 @@
-import RecipePuppyContract from '@contracts/RecipePuppy'
-import SearchEngine from '@interfaces/RecipePuppy/ISearchEngine'
-import SearchResults, { IResult } from '@interfaces/RecipePuppy/ISearchResults'
+import RecipePuppyContract from '@contracts/RecipePuppyClient'
+import RecipePuppySearchEngine from '@interfaces/RecipePuppyClient/ISearchEngine'
+import RecipePuppySearchResults, { IResult as RecipePuppySearchResult } from '@interfaces/RecipePuppyClient/ISearchResults'
 import { BAD_REQUEST } from '@utils/constants/HttpStatus'
 import { genericError, genericHttpError } from '@utils/errors'
 import ArgumentError from '@utils/errors/ArgumentError'
 
 import baseClient from './baseClient'
 
-class RecipePuppy implements SearchEngine {
+class RecipePuppy implements RecipePuppySearchEngine {
   private ingredients: string[]
 
   constructor(ingredients: string[]) {
@@ -20,11 +20,11 @@ class RecipePuppy implements SearchEngine {
     this.ingredients = ingredients
   }
 
-  async searchRecipes(): Promise<IResult[]> {
+  async searchRecipes(): Promise<RecipePuppySearchResult[]> {
     try {
       const requestParams = { params: { i: this.ingredients.join(',') } }
 
-      const response = await baseClient.get<SearchResults>('?', requestParams)
+      const response = await baseClient.get<RecipePuppySearchResults>('?', requestParams)
 
       return response.data.results
     } catch (error) {

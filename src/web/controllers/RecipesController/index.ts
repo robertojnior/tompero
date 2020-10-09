@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 
-import RecipePuppy from '@clients/RecipePuppy'
-import ExtractRecipesFromSearchResults from '@services/RecipePuppy/ExtractRecipesFromSearchResults'
+import RecipePuppyClient from '@clients/RecipePuppyClient'
+import ExtractRecipePuppiesFromSearchResult from '@services/ExtractRecipePuppiesFromSearchResult'
 import { OK, BAD_REQUEST, INTERNAL_SERVER_ERROR, SERVICE_UNAVAILABLE } from '@utils/constants/HttpStatus'
 import ArgumentError from '@utils/errors/ArgumentError'
 import HttpError from '@utils/errors/HttpError'
@@ -18,14 +18,14 @@ class RecipesController {
     const parsedIngredients = (ingredients as string).split(',')
 
     try {
-      const recipePuppy = new RecipePuppy(parsedIngredients)
+      const recipePuppy = new RecipePuppyClient(parsedIngredients)
       const recipesRearchResults = await recipePuppy.searchRecipes()
 
-      const extractRecipesFromSearchResults = new ExtractRecipesFromSearchResults(recipesRearchResults)
+      const extractRecipePuppiesFromSearchResults = new ExtractRecipePuppiesFromSearchResult(recipesRearchResults)
 
-      extractRecipesFromSearchResults.begin()
+      extractRecipePuppiesFromSearchResults.begin()
 
-      const recipes = await Promise.all(extractRecipesFromSearchResults.complete())
+      const recipes = await Promise.all(extractRecipePuppiesFromSearchResults.complete())
 
       return response.status(OK).json({ keywords: parsedIngredients, recipes })
     } catch (error) {

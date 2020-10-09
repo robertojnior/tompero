@@ -1,13 +1,13 @@
-import RecipePuppy from '@clients/RecipePuppy'
-import baseClient from '@clients/RecipePuppy/baseClient'
+import RecipePuppyClient from '@clients/RecipePuppyClient'
+import recipePuppyBaseClient from '@clients/RecipePuppyClient/baseClient'
 import invalidHttpStatuses from '@mocks/InvalidHttpStatuses'
-import recipePuppySearch from '@mocks/RecipePuppy/SearchResults'
+import recipePuppySearch from '@mocks/RecipePuppyClient/SearchResults'
 import { genericError, genericHttpError } from '@utils/errors'
 import ArgumentError from '@utils/errors/ArgumentError'
 
-jest.mock('@clients/RecipePuppy/baseClient')
+jest.mock('@clients/RecipePuppyClient/baseClient')
 
-const mockedBaseClient = baseClient as jest.Mocked<typeof baseClient>
+const mockedRecipePuppyBaseClient = recipePuppyBaseClient as jest.Mocked<typeof recipePuppyBaseClient>
 
 describe('#constructor', () => {
   describe('when have more than three ingredients', () => {
@@ -16,10 +16,10 @@ describe('#constructor', () => {
 
       const argumentError = new Error('Must have less than four ingredients.')
 
-      expect(() => new RecipePuppy(ingredients)).toThrow(argumentError)
+      expect(() => new RecipePuppyClient(ingredients)).toThrow(argumentError)
 
       try {
-        (() => new RecipePuppy(ingredients))()
+        (() => new RecipePuppyClient(ingredients))()
       } catch (error) {
         expect(error).toBeInstanceOf(ArgumentError)
       }
@@ -30,22 +30,22 @@ describe('#constructor', () => {
     it('should instantiate RecipePuppy', () => {
       const ingredients = ['onion', 'tomato', 'garlic']
 
-      expect(new RecipePuppy(ingredients)).toBeInstanceOf(RecipePuppy)
+      expect(new RecipePuppyClient(ingredients)).toBeInstanceOf(RecipePuppyClient)
     })
   })
 })
 
 describe('.fetchRecipes', () => {
-  const recipePuppy = new RecipePuppy(['onion', 'tomato'])
+  const recipePuppy = new RecipePuppyClient(['onion', 'tomato'])
 
   it('should calls baseClient get method 1 time', () => {
     recipePuppy.searchRecipes()
 
-    expect(mockedBaseClient.get).toHaveBeenCalledTimes(1)
+    expect(mockedRecipePuppyBaseClient.get).toHaveBeenCalledTimes(1)
   })
 
   describe('when recipes service is available', () => {
-    mockedBaseClient.get.mockResolvedValue(recipePuppySearch)
+    mockedRecipePuppyBaseClient.get.mockResolvedValue(recipePuppySearch)
 
     it('should return recipes', () => {
       const recipes = recipePuppySearch.data.results
@@ -59,7 +59,7 @@ describe('.fetchRecipes', () => {
       it('should throws http error', () => {
         const rejectedValue = { response: { status: status } }
 
-        mockedBaseClient.get.mockRejectedValue(rejectedValue)
+        mockedRecipePuppyBaseClient.get.mockRejectedValue(rejectedValue)
 
         return expect(recipePuppy.searchRecipes()).rejects.toStrictEqual(genericHttpError)
       })
@@ -67,7 +67,7 @@ describe('.fetchRecipes', () => {
 
     describe('and responds with unexpected error', () => {
       it('should throws generic error', () => {
-        mockedBaseClient.get.mockRejectedValue({ error: 'Unexpected error' })
+        mockedRecipePuppyBaseClient.get.mockRejectedValue({ error: 'Unexpected error' })
 
         return expect(recipePuppy.searchRecipes()).rejects.toStrictEqual(genericError)
       })
