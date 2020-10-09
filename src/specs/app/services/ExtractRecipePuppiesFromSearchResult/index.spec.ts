@@ -83,9 +83,9 @@ describe('.fetchRecipeGif', () => {
   })
 })
 
-describe.skip('.complete', () => {
+describe('.complete', () => {
   describe('when gif service is available', () => {
-    it('should return recipes', async(done) => {
+    it('should return recipes', () => {
       const pastaSaladGiphyUrl = 'https://media.giphy.com/media/xBRhcST67lI2c/giphy.gif'
       const pastaSaladGiphySearch = { data: { data: [{ images: { fixed_height: { url: pastaSaladGiphyUrl } } }] } }
 
@@ -98,18 +98,14 @@ describe.skip('.complete', () => {
 
       extractRecipePuppiesFromSearchResult.begin()
 
-      try {
-        const recipes = await Promise.all(extractRecipePuppiesFromSearchResult.complete())
-
+      return Promise.all(extractRecipePuppiesFromSearchResult.complete()).then(recipes => {
         expect(recipes).toEqual(expect.arrayContaining(mockedRecipes))
-      } catch (error) {
-        done(error)
-      }
+      })
     })
   })
 
   describe('when gif service is unavailable', () => {
-    it('should return recipes with fallback gif url', async(done) => {
+    it('should return recipes with fallback gif url', () => {
       const [statusCode] = invalidHttpStatuses[0]
 
       const rejectedValue = { response: { status: statusCode } }
@@ -118,15 +114,11 @@ describe.skip('.complete', () => {
 
       extractRecipePuppiesFromSearchResult.begin()
 
-      try {
-        const recipes = await Promise.all(extractRecipePuppiesFromSearchResult.complete())
-
+      return Promise.all(extractRecipePuppiesFromSearchResult.complete()).then(recipes => {
         expect(recipesWithFallbackGifUrlAndErrorMessage).toEqual(
           expect.arrayContaining(recipes)
         )
-      } catch (error) {
-        done(error)
-      }
+      })
     })
   })
 })

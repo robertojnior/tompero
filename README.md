@@ -22,9 +22,9 @@ Now you have to fill in the environment variables in the ```.env``` file:
 
 - **GIPHY_BASE_URL**: it's the Giphy API base URL, by the time of this document was written, was/is https://api.giphy.com/v1/gifs/search.
 
-- **GIPHY_BASE_API_KEY**: this have to filled with your Giphy API Key, you can get one [here](https://developers.giphy.com/docs/sdk).
+- **GIPHY_API_KEY**: this have to filled with your Giphy API Key, you can get one [here](https://developers.giphy.com/docs/sdk).
 
-- **GIHPY_GIF_FALLBACK_URL**: it's a GIF URL that will be shown when the Gihpy API is unavailable, to represent the recipes sought.
+- **GIPHY_GIF_FALLBACK_URL**: it's a GIF URL that will be shown when the Giphy API is unavailable, to represent the recipes sought.
 
 ## Usage
 
@@ -35,7 +35,7 @@ docker build -t node-with-tompero .
 docker run -p 3000:3000 -d node-with-tompero
 ```
 
-And visit localhost:3000/recipes, in your browser.
+And visit [localhost:3000/recipes](localhost:3000/recipes), in your browser.
 
 With the application running, to get the recipes you must inform the ingredients this way:
 
@@ -64,7 +64,8 @@ Fill the `.env.test` variables with random values of your choice.
 And run:
 
 ```shell
-node run test
+npm install
+npm run tests
 ```
 
 ## License

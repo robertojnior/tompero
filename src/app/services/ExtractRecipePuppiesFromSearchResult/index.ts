@@ -44,7 +44,7 @@ class ExtractRecipePuppiesFromSearchResult implements IExtractProcess {
 
         return { title, ingredients, link, gif }
       } catch (error) {
-        const gif = process.env.GIHPY_GIF_FALLBACK_URL as string
+        const gif = process.env.GIPHY_GIF_FALLBACK_URL as string
 
         return { title, ingredients, link, gif, message: error.message }
       }
