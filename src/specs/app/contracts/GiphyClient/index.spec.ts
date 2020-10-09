@@ -1,6 +1,6 @@
-import { defaultSearchTerm, emptySearchTerm } from '@mocks/GiphyClient/SearchTerms'
-
 import GiphyClientContract from '@contracts/GiphyClient'
+
+import { defaultSearchTerm, emptySearchTerm } from '@mocks/GiphyClient/SearchTerms'
 
 const giphyClientContract = new GiphyClientContract()
 

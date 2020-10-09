@@ -1,12 +1,12 @@
-import giphySearch from '@mocks/GiphyClient/SearchResults'
-import { defaultSearchTerm, emptySearchTerm } from '@mocks/GiphyClient/SearchTerms'
-import invalidHttpStatuses from '@mocks/InvalidHttpStatuses'
-
 import GiphyClient from '@clients/GiphyClient'
 import giphyBaseClient from '@clients/GiphyClient/baseClient'
 
 import { genericError, genericHttpError } from '@utils/errors'
 import ArgumentError from '@utils/errors/ArgumentError'
+
+import giphySearch from '@mocks/GiphyClient/SearchResults'
+import { defaultSearchTerm, emptySearchTerm } from '@mocks/GiphyClient/SearchTerms'
+import invalidHttpStatuses from '@mocks/InvalidHttpStatuses'
 
 jest.mock('@clients/GiphyClient/baseClient')
 

@@ -1,17 +1,15 @@
-import app from '@infra/server/app'
-import invalidHttpStatuses from '@mocks/InvalidHttpStatuses'
-import { recipes } from '@mocks/RecipePuppyClient/Recipes'
-import recipePuppySearch from '@mocks/RecipePuppyClient/SearchResults'
 import request from 'supertest'
+
+import app from '@infra/server/app'
 
 import giphyBaseClient from '@clients/GiphyClient/baseClient'
 import recipePuppyBaseClient from '@clients/RecipePuppyClient/baseClient'
 
-import {
-  OK,
-  BAD_REQUEST,
-  SERVICE_UNAVAILABLE, INTERNAL_SERVER_ERROR
-} from '@utils/constants/HttpStatuses'
+import { OK, BAD_REQUEST, SERVICE_UNAVAILABLE, INTERNAL_SERVER_ERROR } from '@utils/constants/HttpStatuses'
+
+import invalidHttpStatuses from '@mocks/InvalidHttpStatuses'
+import { recipes } from '@mocks/RecipePuppyClient/Recipes'
+import recipePuppySearch from '@mocks/RecipePuppyClient/SearchResults'
 
 jest.mock('@clients/RecipePuppyClient/baseClient')
 jest.mock('@clients/GiphyClient/baseClient')
@@ -32,51 +30,59 @@ describe('.index', () => {
 
           mockedRecipePuppyBaseClient.get.mockResolvedValue(recipePuppySearch)
 
-          mockedGiphybaseClientBaseClient.get
+          return mockedGiphybaseClientBaseClient.get
             .mockResolvedValueOnce(pastaSaladGiphySearch)
             .mockResolvedValueOnce(tomatoAlfredoGiphySearch)
         })
 
-        it('should return 200 Ok', () => {
-          return request(app)
+        it('should return 200 Ok', done => {
+          request(app)
             .get('/recipes?i=onion,tomato,burguer')
             .then(response => {
               expect(response.status).toBe(OK)
+
+              done()
             })
         })
 
-        it('should return a object with searched ingredients and recipes list', () => {
-          return request(app)
+        it('should return a object with searched ingredients and recipes list', done => {
+          request(app)
             .get('/recipes?i=onion,tomato,burguer')
             .then(response => {
               expect(response.body).toEqual({
                 keywords: ['onion', 'tomato', 'burguer'],
                 recipes: recipes
               })
+
+              done()
             })
         })
       })
 
       describe('and an unexpected error occurs', () => {
         beforeEach(() => {
-          mockedRecipePuppyBaseClient.get.mockRejectedValue({ error: 'Unexpected error' })
+          return mockedRecipePuppyBaseClient.get.mockRejectedValue({ error: 'Unexpected error' })
         })
 
-        it('should return 500 Internal Server Error', () => {
-          return request(app)
+        it('should return 500 Internal Server Error', done => {
+          request(app)
             .get('/recipes?i=onion,tomato,burguer')
             .then(response => {
               expect(response.status).toBe(INTERNAL_SERVER_ERROR)
+
+              done()
             })
         })
 
-        it('should return error message', () => {
-          return request(app)
+        it('should return error message', done => {
+          request(app)
             .get('/recipes?i=onion,tomato,burguer')
             .then(response => {
               expect(response.body).toEqual({
                 error: 'An unexpected error occurred while trying to fetch the results. Contact support.'
               })
+
+              done()
             })
         })
       })
@@ -90,21 +96,25 @@ describe('.index', () => {
           return mockedRecipePuppyBaseClient.get.mockRejectedValue(rejectedValue)
         })
 
-        it('should return 503 Service Unavailable', () => {
-          return request(app)
+        it('should return 503 Service Unavailable', done => {
+          request(app)
             .get('/recipes?i=onion,tomato,burguer')
             .then(response => {
               expect(response.status).toBe(SERVICE_UNAVAILABLE)
+
+              done()
             })
         })
 
-        it('should return error message', () => {
-          return request(app)
+        it('should return error message', done => {
+          request(app)
             .get('/recipes?i=onion,tomato,burguer')
             .then(response => {
               expect(response.body).toEqual({
                 error: 'The server is not available and cannot respond to your request. Please try again later.'
               })
+
+              done()
             })
         })
       })
@@ -113,41 +123,45 @@ describe('.index', () => {
 
   describe('with invalid query params', () => {
     describe('when there are no ingredients on the search', () => {
-      it('should return 400 Bad Request', () => {
-        return request(app)
-          .get('/recipes')
+      it('should return 400 Bad Request', done => {
+        request(app)
+          .get('/recipes?,,,,')
           .then(response => {
             expect(response.status).toBe(BAD_REQUEST)
+
+            done()
           })
       })
 
-      it('should return error message', () => {
-        return request(app)
+      it('should return error message', done => {
+        request(app)
           .get('/recipes')
           .then(response => {
-            expect(response.body).toEqual({
-              error: 'You need to inform at least one ingredient and three in maximum.'
-            })
+            expect(response.body).toEqual({ error: 'You must provide one to three ingredients.' })
+
+            done()
           })
       })
     })
 
     describe('when there are more than three ingredients on the search', () => {
-      it('should return 400 Bad Request', () => {
-        return request(app)
+      it('should return 400 Bad Request', done => {
+        request(app)
           .get('/recipes?i=onion,tomato,burguer,butter')
           .then(response => {
             expect(response.status).toBe(BAD_REQUEST)
+
+            done()
           })
       })
 
-      it('should return error message', () => {
-        return request(app)
+      it('should return error message', done => {
+        request(app)
           .get('/recipes?i=onion,tomato,burguer,butter')
           .then(response => {
-            expect(response.body).toEqual({
-              error: 'Must have less than four ingredients.'
-            })
+            expect(response.body).toEqual({ error: 'You must provide one to three ingredients.' })
+
+            done()
           })
       })
     })

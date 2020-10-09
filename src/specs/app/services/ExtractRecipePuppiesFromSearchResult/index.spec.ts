@@ -1,10 +1,3 @@
-
-import giphySearch from '@mocks/GiphyClient/SearchResults'
-import invalidHttpStatuses from '@mocks/InvalidHttpStatuses'
-import extractedRecipes from '@mocks/RecipePuppyClient/ExtractedRecipes'
-import { recipes as mockedRecipes, recipesWithFallbackGifUrlAndErrorMessage } from '@mocks/RecipePuppyClient/Recipes'
-import recipePuppySearch from '@mocks/RecipePuppyClient/SearchResults'
-
 import giphyBaseClient from '@clients/GiphyClient/baseClient'
 
 import ExtractRecipePuppiesFromSearchResult from '@services/ExtractRecipePuppiesFromSearchResult'
@@ -12,15 +5,21 @@ import ExtractRecipePuppiesFromSearchResult from '@services/ExtractRecipePuppies
 import { genericHttpError, genericError } from '@utils/errors'
 import ArgumentError from '@utils/errors/ArgumentError'
 
+import giphySearch from '@mocks/GiphyClient/SearchResults'
+import invalidHttpStatuses from '@mocks/InvalidHttpStatuses'
+import extractedRecipes from '@mocks/RecipePuppyClient/ExtractedRecipes'
+import { recipes as mockedRecipes, recipesWithFallbackGifUrlAndErrorMessage } from '@mocks/RecipePuppyClient/Recipes'
+import recipePuppySearch from '@mocks/RecipePuppyClient/SearchResults'
+
 jest.mock('@clients/GiphyClient/baseClient')
 
 const mockedGiphyBaseClient = giphyBaseClient as jest.Mocked<typeof giphyBaseClient>
 
-const extractRecipePuppiesFromSearchResults = new ExtractRecipePuppiesFromSearchResult(recipePuppySearch.data.results)
+const extractRecipePuppiesFromSearchResult = new ExtractRecipePuppiesFromSearchResult(recipePuppySearch.data.results)
 
 describe('.begin', () => {
   it('should extract recipes from recipe puppy search results', () => {
-    expect(extractRecipePuppiesFromSearchResults.begin()).toEqual(extractedRecipes)
+    expect(extractRecipePuppiesFromSearchResult.begin()).toEqual(extractedRecipes)
   })
 })
 
@@ -30,7 +29,7 @@ describe('.fetchRecipeGif', () => {
   const recipeTitle = recipePuppySearchResult.title
 
   it('should calls baseClient get method 1 time', () => {
-    extractRecipePuppiesFromSearchResults.fetchRecipeGif(recipeTitle)
+    extractRecipePuppiesFromSearchResult.fetchRecipeGif(recipeTitle)
 
     expect(mockedGiphyBaseClient.get).toHaveBeenCalledTimes(1)
   })
@@ -44,7 +43,7 @@ describe('.fetchRecipeGif', () => {
 
         const searchedGiphy = giphyImage.images.fixed_height.url
 
-        return expect(extractRecipePuppiesFromSearchResults.fetchRecipeGif(recipeTitle)).resolves.toEqual(searchedGiphy)
+        return expect(extractRecipePuppiesFromSearchResult.fetchRecipeGif(recipeTitle)).resolves.toEqual(searchedGiphy)
       })
     })
 
@@ -52,10 +51,10 @@ describe('.fetchRecipeGif', () => {
       it('should throws argument error', () => {
         const argumentError = new ArgumentError('Search term can\'t be blank.')
 
-        expect(() => extractRecipePuppiesFromSearchResults.fetchRecipeGif('')).toThrow(argumentError)
+        expect(() => extractRecipePuppiesFromSearchResult.fetchRecipeGif('')).toThrow(argumentError)
 
         try {
-          (() => extractRecipePuppiesFromSearchResults.fetchRecipeGif(''))()
+          (() => extractRecipePuppiesFromSearchResult.fetchRecipeGif(''))()
         } catch (error) {
           expect(error).toBeInstanceOf(ArgumentError)
         }
@@ -70,7 +69,7 @@ describe('.fetchRecipeGif', () => {
 
         mockedGiphyBaseClient.get.mockRejectedValue(rejectedValue)
 
-        return expect(extractRecipePuppiesFromSearchResults.fetchRecipeGif(recipeTitle)).rejects.toStrictEqual(genericHttpError)
+        return expect(extractRecipePuppiesFromSearchResult.fetchRecipeGif(recipeTitle)).rejects.toStrictEqual(genericHttpError)
       })
     })
 
@@ -78,7 +77,7 @@ describe('.fetchRecipeGif', () => {
       it('should throws generic error', () => {
         mockedGiphyBaseClient.get.mockRejectedValue({ error: 'Unexpected error' })
 
-        return expect(extractRecipePuppiesFromSearchResults.fetchRecipeGif(recipeTitle)).rejects.toStrictEqual(genericError)
+        return expect(extractRecipePuppiesFromSearchResult.fetchRecipeGif(recipeTitle)).rejects.toStrictEqual(genericError)
       })
     })
   })
@@ -97,10 +96,10 @@ describe.skip('.complete', () => {
         .mockResolvedValueOnce(pastaSaladGiphySearch)
         .mockResolvedValueOnce(tomatoAlfredoGiphySearch)
 
-      extractRecipePuppiesFromSearchResults.begin()
+      extractRecipePuppiesFromSearchResult.begin()
 
       try {
-        const recipes = await Promise.all(extractRecipePuppiesFromSearchResults.complete())
+        const recipes = await Promise.all(extractRecipePuppiesFromSearchResult.complete())
 
         expect(recipes).toEqual(expect.arrayContaining(mockedRecipes))
       } catch (error) {
@@ -117,10 +116,10 @@ describe.skip('.complete', () => {
 
       mockedGiphyBaseClient.get.mockRejectedValue(rejectedValue)
 
-      extractRecipePuppiesFromSearchResults.begin()
+      extractRecipePuppiesFromSearchResult.begin()
 
       try {
-        const recipes = await Promise.all(extractRecipePuppiesFromSearchResults.complete())
+        const recipes = await Promise.all(extractRecipePuppiesFromSearchResult.complete())
 
         expect(recipesWithFallbackGifUrlAndErrorMessage).toEqual(
           expect.arrayContaining(recipes)

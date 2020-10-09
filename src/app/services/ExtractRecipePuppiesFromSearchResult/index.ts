@@ -1,7 +1,7 @@
 import dotenv from 'dotenv'
 
-import IExtractedRecipe from '@interfaces/ExtractRecipePuppiesFromSearchResults/IExtractedRecipe'
-import IExtractProcess from '@interfaces/ExtractRecipePuppiesFromSearchResults/IExtractProcess'
+import IExtractedRecipe from '@interfaces/ExtractRecipePuppiesFromSearchResult/IExtractedRecipe'
+import IExtractProcess from '@interfaces/ExtractRecipePuppiesFromSearchResult/IExtractProcess'
 import IRecipe from '@interfaces/Recipe'
 import { IResult as RecipePuppySearchResult } from '@interfaces/RecipePuppyClient/ISearchResults'
 

@@ -8,19 +8,24 @@ import { OK, BAD_REQUEST, INTERNAL_SERVER_ERROR, SERVICE_UNAVAILABLE } from '@ut
 import ArgumentError from '@utils/errors/ArgumentError'
 import HttpError from '@utils/errors/HttpError'
 
+function sanitizeIngredients(ingredients: string) {
+  if (!ingredients) {
+    return []
+  }
+
+  const splittedIngredients = ingredients.split(',').map(ingredient => ingredient.trim())
+
+  return splittedIngredients.filter(ingredient => ingredient !== '')
+}
+
 class RecipesController {
   async index(request: Request, response: Response): Promise<Response<unknown>> {
     const { i: ingredients } = request.query
 
-    if (!ingredients) {
-      return response.status(BAD_REQUEST).json({
-        error: 'You need to inform at least one ingredient and three in maximum.'
-      })
-    }
-    const parsedIngredients = (ingredients as string).split(',')
-
     try {
-      const recipePuppyClient = new RecipePuppyClient(parsedIngredients)
+      const sanitizedIngredients = sanitizeIngredients(ingredients as string)
+
+      const recipePuppyClient = new RecipePuppyClient(sanitizedIngredients)
       const recipesRearchResults = await recipePuppyClient.searchRecipes()
 
       const extractRecipePuppiesFromSearchResult = new ExtractRecipePuppiesFromSearchResult(recipesRearchResults)
@@ -29,7 +34,7 @@ class RecipesController {
 
       const recipes = await Promise.all(extractRecipePuppiesFromSearchResult.complete())
 
-      return response.status(OK).json({ keywords: parsedIngredients, recipes })
+      return response.status(OK).json({ keywords: sanitizedIngredients, recipes })
     } catch (error) {
       if (error instanceof ArgumentError) {
         return response.status(BAD_REQUEST).json({ error: error.message })

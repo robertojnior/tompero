@@ -1,9 +1,11 @@
 import RecipePuppyClient from '@clients/RecipePuppyClient'
 import recipePuppyBaseClient from '@clients/RecipePuppyClient/baseClient'
-import invalidHttpStatuses from '@mocks/InvalidHttpStatuses'
-import recipePuppySearch from '@mocks/RecipePuppyClient/SearchResults'
+
 import { genericError, genericHttpError } from '@utils/errors'
 import ArgumentError from '@utils/errors/ArgumentError'
+
+import invalidHttpStatuses from '@mocks/InvalidHttpStatuses'
+import recipePuppySearch from '@mocks/RecipePuppyClient/SearchResults'
 
 jest.mock('@clients/RecipePuppyClient/baseClient')
 
@@ -14,7 +16,23 @@ describe('#constructor', () => {
     it('should throws argument error', () => {
       const ingredients = ['onion', 'tomato', 'pineapple', 'garlic']
 
-      const argumentError = new Error('Must have less than four ingredients.')
+      const argumentError = new Error('You must provide one to three ingredients.')
+
+      expect(() => new RecipePuppyClient(ingredients)).toThrow(argumentError)
+
+      try {
+        (() => new RecipePuppyClient(ingredients))()
+      } catch (error) {
+        expect(error).toBeInstanceOf(ArgumentError)
+      }
+    })
+  })
+
+  describe('when don\'t have any ingredient', () => {
+    it('should throws argument error', () => {
+      const ingredients = ['', '']
+
+      const argumentError = new Error('You must provide one to three ingredients.')
 
       expect(() => new RecipePuppyClient(ingredients)).toThrow(argumentError)
 

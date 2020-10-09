@@ -16,7 +16,7 @@ class RecipePuppy implements RecipePuppySearchEngine {
     const recipePuppyClientContract = new RecipePuppyClientContract()
 
     if (!recipePuppyClientContract.validate(ingredients)) {
-      throw new ArgumentError('Must have less than four ingredients.')
+      throw new ArgumentError('You must provide one to three ingredients.')
     }
 
     this.ingredients = ingredients
